@@ -24,6 +24,6 @@ app.get("/api/v1", function(req, res) {
 
 
 // start our app based on port declaration above
-app.listen(port, function() {
+app.listen(process.env.PORT || 5757, function() {
   console.log(`App listening on port ${port}`);
 });
