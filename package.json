@@ -1,7 +1,7 @@
 {
-  "name": "rekodmurid",
+  "name": "boilerexpress",
   "version": "1.0.0",
-  "description": "This is murid attendance API using expressjs.",
+  "description": "ExpressJS Boilerplate",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,8 +10,7 @@
   "keywords": [
     "node",
     "express",
-    "jwt",
-    "kehadiran"
+    "jwt"
   ],
   "author": "Toi",
   "license": "ISC",

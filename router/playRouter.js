@@ -1,44 +1,43 @@
-let path = require('path')
-var bcrypt = require('bcrypt')
-var User = require('../models/user') // get mongoose User Model
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var jwt = require("jsonwebtoken"); // used to create, sign, and verify tokens
 
-const express = require('express'),
-  router = express.Router()
+const express = require("express"),
+  router = express.Router();
+var app = express();
+app.set("superSecret", process.env.SECRET); // secret variable
 
-router.use(function (req, res, next) {
+router.use(function(req, res, next) {
   // check header or url parameters or post parameters for token
-  var token = req.body.token || req.query.token || req.headers.authorization
+  var token = req.body.token || req.query.token || req.headers.authorization;
 
   // decode token
   if (token) {
     // verifies secret and checks exp
-    jwt.verify(token, 'superSecret', function (err, decoded) {
+    jwt.verify(token, app.get("superSecret"), function(err, decoded) {
       if (err) {
         return res.json({
           success: false,
-          message: 'Failed to authenticate token.'
-        })
+          message: "Failed to authenticate token."
+        });
       } else {
         // if everything is good, save to request for use in other routes
-        req.decoded = decoded
-        next()
+        req.decoded = decoded;
+        next();
       }
-    })
+    });
   } else {
     // if there is no token
     // return an error
     return res.status(403).send({
       success: false,
-      message: 'No token provided.'
-    })
+      message: "Invalid provided."
+    });
   }
-})
+});
 
 // making use of normal routes
-router.get('/', (req, res) => {
-  console.log(req.query)
-  res.send('Play:Home')
-})
+router.get("/", (req, res) => {
+  console.log(req.query);
+  res.send("Play:Home");
+});
 
-module.exports = router
+module.exports = router;

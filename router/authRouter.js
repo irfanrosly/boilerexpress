@@ -23,18 +23,18 @@ router.post("/register", function(req, res) {
     if (req.body.password) {
       let password = bcrypt.hashSync(req.body.password, 10);
 
-      // create a sample user
-      var nick = new User({
+      // create a new user
+      var user = new User({
         name: req.body.name,
         password: password,
         admin: false
       });
 
-      // save the sample user
-      nick.save(function(err) {
+      // save the user
+      user.save(function(err) {
         if (err) throw err;
         console.log("User saved successfully");
-        res.json({ success: true });
+        res.json({ success: true, name: user.name });
       });
     } else {
       res.send("Please input password!");
@@ -45,12 +45,17 @@ router.post("/register", function(req, res) {
 });
 
 router.post("/login", function(req, res) {
+  if (!req.body.name || !req.body.password) {
+    res
+      .status(422)
+      .json({ errMessage: "Please make sure all field are sent. Thank you." });
+  }
+
   User.findOne(
     {
       name: req.body.name
     },
     function(err, user) {
-      if (err) throw err;
       if (!user) {
         res.json({
           success: false,
