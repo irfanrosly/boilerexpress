@@ -6,8 +6,7 @@ var bodyParser = require("body-parser"); // import body-parser to handle our req
 
 var app = express(); // initialise express application
 
-var port = process.env.PORT || 5757; // configure port 
-
+var port = process.env.PORT || 5757; // configure port
 
 mongoose.connect(process.env.DB); // connect to database
 
@@ -22,8 +21,7 @@ app.get("/api/v1", function(req, res) {
   res.send("Welcome to KS Express!");
 });
 
-
 // start our app based on port declaration above
-app.listen(process.env.PORT || 5757, function() {
+app.listen(port, function() {
   console.log(`App listening on port ${port}`);
 });
